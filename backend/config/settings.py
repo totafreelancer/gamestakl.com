@@ -136,7 +136,8 @@ REST_FRAMEWORK = {
 # CORS Configuration
 # Primary origins - Vercel production + local development
 CORS_ALLOWED_ORIGINS = [
-    "https://<YOUR_VERCEL_URL>",          # TODO: Replace with your actual Vercel URL
+    "https://gamestakl-com.vercel.app",              # Vercel production frontend
+    "https://gamestakl-com-git-main-hp.vercel.app",  # Vercel preview deployments
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://localhost:5173",

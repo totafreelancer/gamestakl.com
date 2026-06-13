@@ -5,7 +5,7 @@ import {
   Loader2, Info, Send, ArrowRight
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import api from '../api/axios';
+import apiClient from '../api/axiosConfig';
 
 /* ═══════════════════════════════════════════════════════════════════
  * JoinTournamentModal
@@ -87,7 +87,7 @@ const JoinTournamentModal = ({ tournament, isOpen, onClose, onSuccess }) => {
         transaction_id: transactionId.trim(),
       };
 
-      const response = await api.post('/tournaments/registrations/', payload, {
+      const response = await apiClient.post('/tournaments/registrations/', payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

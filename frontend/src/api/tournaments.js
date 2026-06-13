@@ -1,4 +1,4 @@
-import api from './axios'
+import apiClient from './axiosConfig'
 
 export const tournamentService = {
   // Tournaments
@@ -11,7 +11,7 @@ export const tournamentService = {
         }
       })
       
-      const response = await api.get('/tournaments/', { params })
+      const response = await apiClient.get('/tournaments/', { params })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch tournaments' }
@@ -20,7 +20,7 @@ export const tournamentService = {
 
   getTournament: async (tournamentId) => {
     try {
-      const response = await api.get(`/tournaments/${tournamentId}/`)
+      const response = await apiClient.get(`/tournaments/${tournamentId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch tournament' }
@@ -29,7 +29,7 @@ export const tournamentService = {
 
   createTournament: async (tournamentData) => {
     try {
-      const response = await api.post('/tournaments/', tournamentData)
+      const response = await apiClient.post('/tournaments/', tournamentData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to create tournament' }
@@ -38,7 +38,7 @@ export const tournamentService = {
 
   updateTournament: async (tournamentId, tournamentData) => {
     try {
-      const response = await api.patch(`/tournaments/${tournamentId}/`, tournamentData)
+      const response = await apiClient.patch(`/tournaments/${tournamentId}/`, tournamentData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to update tournament' }
@@ -47,7 +47,7 @@ export const tournamentService = {
 
   deleteTournament: async (tournamentId) => {
     try {
-      const response = await api.delete(`/tournaments/${tournamentId}/`)
+      const response = await apiClient.delete(`/tournaments/${tournamentId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to delete tournament' }
@@ -58,7 +58,7 @@ export const tournamentService = {
     try {
       const payload = { payment_gateway: paymentGateway }
       if (inGameId) payload.in_game_id = inGameId
-      const response = await api.post(`/tournaments/${tournamentId}/join/`, payload)
+      const response = await apiClient.post(`/tournaments/${tournamentId}/join/`, payload)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to join tournament' }
@@ -68,7 +68,7 @@ export const tournamentService = {
   // Manual payment proof upload
   submitManualPaymentProof: async (participantId, formData) => {
     try {
-      const response = await api.post(`/tournaments/participants/${participantId}/submit_manual_payment_proof/`, formData, {
+      const response = await apiClient.post(`/tournaments/participants/${participantId}/submit_manual_payment_proof/`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       return response.data
@@ -80,7 +80,7 @@ export const tournamentService = {
   // Get manual payment status
   getManualPaymentStatus: async (participantId) => {
     try {
-      const response = await api.get(`/tournaments/participants/${participantId}/get_manual_payment_status/`)
+      const response = await apiClient.get(`/tournaments/participants/${participantId}/get_manual_payment_status/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to get payment status' }
@@ -90,7 +90,7 @@ export const tournamentService = {
   // Admin actions
   approveManualPayment: async (participantId) => {
     try {
-      const response = await api.post(`/tournaments/participants/${participantId}/approve_manual_payment/`)
+      const response = await apiClient.post(`/tournaments/participants/${participantId}/approve_manual_payment/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to approve payment' }
@@ -99,7 +99,7 @@ export const tournamentService = {
 
   rejectManualPayment: async (participantId, reason = '') => {
     try {
-      const response = await api.post(`/tournaments/participants/${participantId}/reject_manual_payment/`, { rejection_reason: reason })
+      const response = await apiClient.post(`/tournaments/participants/${participantId}/reject_manual_payment/`, { rejection_reason: reason })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to reject payment' }
@@ -108,7 +108,7 @@ export const tournamentService = {
 
   verifyPayment: async (participantId, transactionId) => {
     try {
-      const response = await api.post(`/tournaments/participants/${participantId}/verify-payment/`, { transaction_id: transactionId })
+      const response = await apiClient.post(`/tournaments/participants/${participantId}/verify-payment/`, { transaction_id: transactionId })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to verify payment' }
@@ -117,7 +117,7 @@ export const tournamentService = {
 
   generateBracket: async (tournamentId) => {
     try {
-      const response = await api.post(`/tournaments/${tournamentId}/bracket/generate/`)
+      const response = await apiClient.post(`/tournaments/${tournamentId}/bracket/generate/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to generate bracket' }
@@ -126,7 +126,7 @@ export const tournamentService = {
 
   getBracket: async (tournamentId) => {
     try {
-      const response = await api.get(`/tournaments/${tournamentId}/bracket/`)
+      const response = await apiClient.get(`/tournaments/${tournamentId}/bracket/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch bracket' }
@@ -143,7 +143,7 @@ export const tournamentService = {
         }
       })
       
-      const response = await api.get('/tournaments/participants/', { params })
+      const response = await apiClient.get('/tournaments/participants/', { params })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch participants' }
@@ -152,7 +152,7 @@ export const tournamentService = {
 
   getParticipant: async (participantId) => {
     try {
-      const response = await api.get(`/tournaments/participants/${participantId}/`)
+      const response = await apiClient.get(`/tournaments/participants/${participantId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch participant' }
@@ -169,7 +169,7 @@ export const tournamentService = {
         }
       })
       
-      const response = await api.get('/tournaments/matches/', { params })
+      const response = await apiClient.get('/tournaments/matches/', { params })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch matches' }
@@ -178,7 +178,7 @@ export const tournamentService = {
 
   getMatch: async (matchId) => {
     try {
-      const response = await api.get(`/tournaments/matches/${matchId}/`)
+      const response = await apiClient.get(`/tournaments/matches/${matchId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch match' }
@@ -187,7 +187,7 @@ export const tournamentService = {
 
   updateMatchScore: async (matchId, scoreData) => {
     try {
-      const response = await api.post(`/tournaments/matches/${matchId}/score/`, scoreData)
+      const response = await apiClient.post(`/tournaments/matches/${matchId}/score/`, scoreData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to update match score' }
@@ -197,7 +197,7 @@ export const tournamentService = {
   // Stats and utilities
   getTournamentStats: async () => {
     try {
-      const response = await api.get('/tournaments/stats/')
+      const response = await apiClient.get('/tournaments/stats/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch tournament stats' }
@@ -206,7 +206,7 @@ export const tournamentService = {
 
   getUpcomingTournaments: async () => {
     try {
-      const response = await api.get('/tournaments/upcoming/')
+      const response = await apiClient.get('/tournaments/upcoming/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch upcoming tournaments' }
@@ -225,7 +225,7 @@ export const tournamentService = {
    */
   createRegistration: async (registrationData) => {
     try {
-      const response = await api.post(
+      const response = await apiClient.post(
         '/tournaments/registrations/',
         registrationData
       );
@@ -242,7 +242,7 @@ export const tournamentService = {
    */
   registerForTournament: async (tournamentId, registrationData) => {
     try {
-      const response = await api.post(
+      const response = await apiClient.post(
         `/tournaments/${tournamentId}/register/`,
         registrationData
       );
@@ -258,7 +258,7 @@ export const tournamentService = {
    */
   getMyRegistrationStatus: async (tournamentId) => {
     try {
-      const response = await api.get(
+      const response = await apiClient.get(
         `/tournaments/${tournamentId}/my-status/`
       );
       return response.data;
@@ -276,7 +276,7 @@ export const tournamentService = {
    */
   adminGetPendingRegistrations: async () => {
     try {
-      const response = await api.get('/tournaments/admin/registrations/pending/');
+      const response = await apiClient.get('/tournaments/admin/registrations/pending/');
       return response.data;
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch pending registrations' };
@@ -289,7 +289,7 @@ export const tournamentService = {
    */
   adminApproveRegistration: async (registrationId) => {
     try {
-      const response = await api.post(
+      const response = await apiClient.post(
         `/tournaments/admin/registrations/${registrationId}/approve/`
       );
       return response.data;

@@ -1,10 +1,9 @@
-import api from './axios'
-import { rawAxios } from './axios'
+import apiClient, { rawAxios, API_BASE_URL } from './axiosConfig'
 
 export const authService = {
   login: async (credentials) => {
     try {
-      const response = await api.post('/auth/login/', credentials)
+      const response = await apiClient.post('/auth/login/', credentials)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Login failed' }
@@ -13,7 +12,7 @@ export const authService = {
 
   register: async (userData) => {
     try {
-      const response = await api.post('/auth/register/', userData)
+      const response = await apiClient.post('/auth/register/', userData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Registration failed' }
@@ -23,7 +22,7 @@ export const authService = {
   logout: async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken')
-      await api.post('/auth/logout/', { refresh: refreshToken })
+      await apiClient.post('/auth/logout/', { refresh: refreshToken })
     } catch (error) {
       console.error('Logout error:', error)
     } finally {
@@ -34,7 +33,7 @@ export const authService = {
 
   getProfile: async () => {
     try {
-      const response = await api.get('/auth/profile/')
+      const response = await apiClient.get('/auth/profile/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to get profile' }
@@ -43,7 +42,7 @@ export const authService = {
 
   updateProfile: async (profileData) => {
     try {
-      const response = await api.patch('/auth/profile/', profileData)
+      const response = await apiClient.patch('/auth/profile/', profileData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to update profile' }
@@ -55,7 +54,7 @@ export const authService = {
       const formData = new FormData()
       formData.append('profile_picture', file)
       // Use raw axios instance to avoid default Content-Type header
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+      // API_BASE_URL is imported from axiosConfig
       const token = localStorage.getItem('accessToken')
       const response = await rawAxios.patch(`${API_BASE_URL}/auth/profile/`, formData, {
         headers: {
@@ -71,7 +70,7 @@ export const authService = {
 
   getUserStats: async () => {
     try {
-      const response = await api.get('/auth/stats/')
+      const response = await apiClient.get('/auth/stats/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to get user stats' }
@@ -81,7 +80,7 @@ export const authService = {
   // Google / Firebase authentication
   firebaseLogin: async (idToken) => {
     try {
-      const response = await api.post('/auth/firebase/login/', { id_token: idToken })
+      const response = await apiClient.post('/auth/firebase/login/', { id_token: idToken })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Google sign-in failed' }
@@ -90,7 +89,7 @@ export const authService = {
 
   getUserProfile: async (userId) => {
     try {
-      const response = await api.get(`/auth/users/${userId}/profile/`)
+      const response = await apiClient.get(`/auth/users/${userId}/profile/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to get user profile' }
@@ -99,7 +98,7 @@ export const authService = {
 
   requestPasswordReset: async (email) => {
     try {
-      const response = await api.post('/auth/password-reset-request/', { email })
+      const response = await apiClient.post('/auth/password-reset-request/', { email })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Password reset request failed' }
@@ -108,7 +107,7 @@ export const authService = {
 
   confirmPasswordReset: async (resetData) => {
     try {
-      const response = await api.post('/auth/password-reset-confirm/', resetData)
+      const response = await apiClient.post('/auth/password-reset-confirm/', resetData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Password reset failed' }
@@ -118,7 +117,7 @@ export const authService = {
   refreshToken: async () => {
     try {
       const refreshToken = localStorage.getItem('refreshToken')
-      const response = await api.post('/token/refresh/', { refresh: refreshToken })
+      const response = await apiClient.post('/token/refresh/', { refresh: refreshToken })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Token refresh failed' }

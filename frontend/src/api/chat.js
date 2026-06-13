@@ -1,13 +1,11 @@
-import api, { rawAxios } from './axios'
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+import apiClient, { rawAxios, API_BASE_URL } from './axiosConfig'
 
 export const chatService = {
   // ==================== CONVERSATIONS ====================
 
   getConversations: async () => {
     try {
-      const response = await api.get('/chat/conversations/')
+      const response = await apiClient.get('/chat/conversations/')
       return response.data.results || response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch conversations' }
@@ -16,7 +14,7 @@ export const chatService = {
 
   getConversation: async (conversationId) => {
     try {
-      const response = await api.get(`/chat/conversations/${conversationId}/`)
+      const response = await apiClient.get(`/chat/conversations/${conversationId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch conversation' }
@@ -27,7 +25,7 @@ export const chatService = {
 
   getOrCreateDM: async (userId) => {
     try {
-      const response = await api.post(`/chat/conversations/dm/${userId}/`)
+      const response = await apiClient.post(`/chat/conversations/dm/${userId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to get or create conversation' }
@@ -38,7 +36,7 @@ export const chatService = {
 
   createGroup: async (name, participantIds) => {
     try {
-      const response = await api.post('/chat/conversations/group/create/', {
+      const response = await apiClient.post('/chat/conversations/group/create/', {
         name,
         participant_ids: participantIds,
       })
@@ -50,7 +48,7 @@ export const chatService = {
 
   addGroupMembers: async (conversationId, participantIds) => {
     try {
-      const response = await api.post(
+      const response = await apiClient.post(
         `/chat/conversations/group/${conversationId}/add/`,
         { participant_ids: participantIds }
       )
@@ -62,7 +60,7 @@ export const chatService = {
 
   removeGroupMember: async (conversationId, userId) => {
     try {
-      const response = await api.post(
+      const response = await apiClient.post(
         `/chat/conversations/group/${conversationId}/remove/${userId}/`
       )
       return response.data
@@ -73,7 +71,7 @@ export const chatService = {
 
   leaveGroup: async (conversationId) => {
     try {
-      const response = await api.post(
+      const response = await apiClient.post(
         `/chat/conversations/group/${conversationId}/leave/`
       )
       return response.data
@@ -103,7 +101,7 @@ export const chatService = {
 
   getMessages: async (conversationId) => {
     try {
-      const response = await api.get(`/chat/conversations/${conversationId}/messages/`)
+      const response = await apiClient.get(`/chat/conversations/${conversationId}/messages/`)
       return response.data.results || response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch messages' }
@@ -134,7 +132,7 @@ export const chatService = {
 
   sendMessage: async (conversationId, text) => {
     try {
-      const response = await api.post(`/chat/conversations/${conversationId}/send/`, { text })
+      const response = await apiClient.post(`/chat/conversations/${conversationId}/send/`, { text })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to send message' }
@@ -160,7 +158,7 @@ export const chatService = {
 
   markSeen: async (conversationId) => {
     try {
-      const response = await api.post(`/chat/conversations/${conversationId}/seen/`)
+      const response = await apiClient.post(`/chat/conversations/${conversationId}/seen/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to mark messages as seen' }
@@ -169,7 +167,7 @@ export const chatService = {
 
   getUnreadCount: async () => {
     try {
-      const response = await api.get('/chat/conversations/unread-count/')
+      const response = await apiClient.get('/chat/conversations/unread-count/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch unread count' }

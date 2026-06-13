@@ -1,116 +1,116 @@
-import api from './axios';
+import apiClient from './axiosConfig';
 
 const API_URL = '/admin/';
 
 // Dashboard Stats
 export const getDashboardStats = () => {
-  return api.get(`${API_URL}stats/`);
+  return apiClient.get(`${API_URL}stats/`);
 };
 
 export const getRecentActivity = () => {
-  return api.get(`${API_URL}activity/`);
+  return apiClient.get(`${API_URL}activity/`);
 };
 
 // User Management
 export const getUsers = (params = {}) => {
-  return api.get(`${API_URL}users/`, { params });
+  return apiClient.get(`${API_URL}users/`, { params });
 };
 
 export const getUserDetails = (userId) => {
-  return api.get(`${API_URL}users/${userId}/`);
+  return apiClient.get(`${API_URL}users/${userId}/`);
 };
 
 export const banUser = (userId) => {
-  return api.post(`${API_URL}users/${userId}/ban/`);
+  return apiClient.post(`${API_URL}users/${userId}/ban/`);
 };
 
 export const unbanUser = (userId) => {
-  return api.post(`${API_URL}users/${userId}/unban/`);
+  return apiClient.post(`${API_URL}users/${userId}/unban/`);
 };
 
 export const promoteUser = (userId) => {
-  return api.post(`${API_URL}users/${userId}/promote/`);
+  return apiClient.post(`${API_URL}users/${userId}/promote/`);
 };
 
 export const demoteUser = (userId) => {
-  return api.post(`${API_URL}users/${userId}/demote/`);
+  return apiClient.post(`${API_URL}users/${userId}/demote/`);
 };
 
 export const deleteUser = (userId) => {
-  return api.delete(`${API_URL}users/${userId}/delete_user/`);
+  return apiClient.delete(`${API_URL}users/${userId}/delete_user/`);
 };
 
 // Add points to a user's GamerProfile (admin action)
 export const addPoints = (userId, amount) => {
-  return api.post(`${API_URL}users/${userId}/add_points/`, { amount });
+  return apiClient.post(`${API_URL}users/${userId}/add_points/`, { amount });
 };
 
 // Content Management
 export const getPosts = (params = {}) => {
-  return api.get(`${API_URL}content/posts/`, { params });
+  return apiClient.get(`${API_URL}content/posts/`, { params });
 };
 
 export const approvePost = (postId) => {
-  return api.post(`${API_URL}content/approve_post/`, { post_id: postId });
+  return apiClient.post(`${API_URL}content/approve_post/`, { post_id: postId });
 };
 
 export const rejectPost = (postId) => {
-  return api.post(`${API_URL}content/reject_post/`, { post_id: postId });
+  return apiClient.post(`${API_URL}content/reject_post/`, { post_id: postId });
 };
 
 export const getComments = (params = {}) => {
-  return api.get(`${API_URL}content/comments/`, { params });
+  return apiClient.get(`${API_URL}content/comments/`, { params });
 };
 
 export const approveComment = (commentId) => {
-  return api.post(`${API_URL}content/approve_comment/`, { comment_id: commentId });
+  return apiClient.post(`${API_URL}content/approve_comment/`, { comment_id: commentId });
 };
 
 export const deleteComment = (commentId) => {
-  return api.delete(`${API_URL}content/delete_comment/`, {
+  return apiClient.delete(`${API_URL}content/delete_comment/`, {
     params: { comment_id: commentId }
   });
 };
 
 // Tournament Management
 export const getAdminTournaments = (params = {}) => {
-  return api.get(`${API_URL}tournaments/`, { params });
+  return apiClient.get(`${API_URL}tournaments/`, { params });
 };
 
 export const getAdminTournamentDetails = (tournamentId) => {
-  return api.get(`${API_URL}tournaments/${tournamentId}/`);
+  return apiClient.get(`${API_URL}tournaments/${tournamentId}/`);
 };
 
 export const createTournament = (data) => {
-  return api.post(`${API_URL}tournaments/`, data, {
+  return apiClient.post(`${API_URL}tournaments/`, data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
 
 export const updateTournament = (tournamentId, data) => {
-  return api.patch(`${API_URL}tournaments/${tournamentId}/`, data, {
+  return apiClient.patch(`${API_URL}tournaments/${tournamentId}/`, data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
 
 export const startTournament = (tournamentId) => {
-  return api.post(`${API_URL}tournaments/${tournamentId}/start/`);
+  return apiClient.post(`${API_URL}tournaments/${tournamentId}/start/`);
 };
 
 export const completeTournament = (tournamentId) => {
-  return api.post(`${API_URL}tournaments/${tournamentId}/complete/`);
+  return apiClient.post(`${API_URL}tournaments/${tournamentId}/complete/`);
 };
 
 export const cancelTournament = (tournamentId) => {
-  return api.post(`${API_URL}tournaments/${tournamentId}/cancel/`);
+  return apiClient.post(`${API_URL}tournaments/${tournamentId}/cancel/`);
 };
 
 export const deleteTournament = (tournamentId) => {
-  return api.delete(`${API_URL}tournaments/${tournamentId}/delete_tournament/`);
+  return apiClient.delete(`${API_URL}tournaments/${tournamentId}/delete_tournament/`);
 };
 
 export const getTournamentParticipants = (tournamentId, params = {}) => {
-  return api.get(`${API_URL}tournaments/${tournamentId}/participants/`, { params });
+  return apiClient.get(`${API_URL}tournaments/${tournamentId}/participants/`, { params });
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -124,7 +124,7 @@ export const getTournamentParticipants = (tournamentId, params = {}) => {
  * @param {Object} params - { search, payment_status, page, page_size }
  */
 export const getTournamentRegistrations = (tournamentId, params = {}) => {
-  return api.get(`${API_URL}tournaments/${tournamentId}/registrations/`, { params });
+  return apiClient.get(`${API_URL}tournaments/${tournamentId}/registrations/`, { params });
 };
 
 /**
@@ -134,7 +134,7 @@ export const getTournamentRegistrations = (tournamentId, params = {}) => {
  * @param {number} registrationId
  */
 export const approveRegistration = (registrationId) => {
-  return api.post(`/tournaments/registrations/${registrationId}/approve_participant/`);
+  return apiClient.post(`/tournaments/registrations/${registrationId}/approve_participant/`);
 };
 
 /**
@@ -145,7 +145,7 @@ export const approveRegistration = (registrationId) => {
  * @param {string} rejectionReason
  */
 export const rejectRegistration = (registrationId, rejectionReason = '') => {
-  return api.post(
+  return apiClient.post(
     `/tournaments/registrations/${registrationId}/reject_participant/`,
     { rejection_reason: rejectionReason }
   );

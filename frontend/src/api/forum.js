@@ -1,4 +1,4 @@
-import api, { rawAxios } from './axios'
+import apiClient, { rawAxios, API_BASE_URL } from './axiosConfig'
 
 export const forumService = {
   // Posts
@@ -11,7 +11,7 @@ export const forumService = {
         }
       })
       
-      const response = await api.get('/forum/posts/', { params })
+      const response = await apiClient.get('/forum/posts/', { params })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch posts' }
@@ -20,7 +20,7 @@ export const forumService = {
 
   getPost: async (postId) => {
     try {
-      const response = await api.get(`/forum/posts/${postId}/`)
+      const response = await apiClient.get(`/forum/posts/${postId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch post' }
@@ -29,7 +29,7 @@ export const forumService = {
 
   createPost: async (postData) => {
     try {
-      const response = await api.post('/forum/posts/', postData)
+      const response = await apiClient.post('/forum/posts/', postData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to create post' }
@@ -38,7 +38,7 @@ export const forumService = {
 
   createPostWithImage: async (formData) => {
     try {
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+      // API_BASE_URL is imported from axiosConfig
       const token = localStorage.getItem('accessToken')
       const response = await rawAxios.post(`${API_BASE_URL}/forum/posts/`, formData, {
         headers: {
@@ -54,7 +54,7 @@ export const forumService = {
 
   updatePost: async (postId, postData) => {
     try {
-      const response = await api.patch(`/forum/posts/${postId}/`, postData)
+      const response = await apiClient.patch(`/forum/posts/${postId}/`, postData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to update post' }
@@ -63,7 +63,7 @@ export const forumService = {
 
   deletePost: async (postId) => {
     try {
-      const response = await api.delete(`/forum/posts/${postId}/`)
+      const response = await apiClient.delete(`/forum/posts/${postId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to delete post' }
@@ -72,7 +72,7 @@ export const forumService = {
 
   upvotePost: async (postId, action) => {
     try {
-      const response = await api.post(`/forum/posts/${postId}/upvote/`, { action })
+      const response = await apiClient.post(`/forum/posts/${postId}/upvote/`, { action })
       return response.data
     } catch (error) {
       console.error('Upvote error:', error.response?.data || error)
@@ -91,7 +91,7 @@ export const forumService = {
         }
       })
       
-      const response = await api.get('/forum/comments/', { params })
+      const response = await apiClient.get('/forum/comments/', { params })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch comments' }
@@ -100,7 +100,7 @@ export const forumService = {
 
   createComment: async (commentData) => {
     try {
-      const response = await api.post('/forum/comments/', commentData)
+      const response = await apiClient.post('/forum/comments/', commentData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to create comment' }
@@ -109,7 +109,7 @@ export const forumService = {
 
   updateComment: async (commentId, commentData) => {
     try {
-      const response = await api.patch(`/forum/comments/${commentId}/`, commentData)
+      const response = await apiClient.patch(`/forum/comments/${commentId}/`, commentData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to update comment' }
@@ -118,7 +118,7 @@ export const forumService = {
 
   deleteComment: async (commentId) => {
     try {
-      const response = await api.delete(`/forum/comments/${commentId}/`)
+      const response = await apiClient.delete(`/forum/comments/${commentId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to delete comment' }
@@ -127,7 +127,7 @@ export const forumService = {
 
   upvoteComment: async (commentId, action) => {
     try {
-      const response = await api.post(`/forum/comments/${commentId}/upvote/`, { action })
+      const response = await apiClient.post(`/forum/comments/${commentId}/upvote/`, { action })
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to upvote comment' }
@@ -137,7 +137,7 @@ export const forumService = {
   // Stats
   getForumStats: async () => {
     try {
-      const response = await api.get('/forum/stats/')
+      const response = await apiClient.get('/forum/stats/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch forum stats' }

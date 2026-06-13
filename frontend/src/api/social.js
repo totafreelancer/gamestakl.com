@@ -1,10 +1,10 @@
-import api, { rawAxios } from './axios'
+import apiClient, { rawAxios, API_BASE_URL } from './axiosConfig'
 
 export const socialService = {
   // Follow / Unfollow
   followUser: async (userId) => {
     try {
-      const response = await api.post(`/auth/users/${userId}/follow/`)
+      const response = await apiClient.post(`/auth/users/${userId}/follow/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to follow user' }
@@ -13,7 +13,7 @@ export const socialService = {
 
   unfollowUser: async (userId) => {
     try {
-      const response = await api.post(`/auth/users/${userId}/unfollow/`)
+      const response = await apiClient.post(`/auth/users/${userId}/unfollow/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to unfollow user' }
@@ -22,7 +22,7 @@ export const socialService = {
 
   getFollowers: async (userId) => {
     try {
-      const response = await api.get(`/auth/users/${userId}/followers/`)
+      const response = await apiClient.get(`/auth/users/${userId}/followers/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch followers' }
@@ -31,7 +31,7 @@ export const socialService = {
 
   getFollowing: async (userId) => {
     try {
-      const response = await api.get(`/auth/users/${userId}/following/`)
+      const response = await apiClient.get(`/auth/users/${userId}/following/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch following' }
@@ -40,7 +40,7 @@ export const socialService = {
 
   checkFollowStatus: async (userId) => {
     try {
-      const response = await api.get(`/auth/users/${userId}/follow-status/`)
+      const response = await apiClient.get(`/auth/users/${userId}/follow-status/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to check follow status' }
@@ -50,7 +50,7 @@ export const socialService = {
   // User Search (for messaging)
   searchUsers: async (query) => {
     try {
-      const response = await api.get(`/auth/users/search/?q=${encodeURIComponent(query)}`)
+      const response = await apiClient.get(`/auth/users/search/?q=${encodeURIComponent(query)}`)
       return response.data.results || []
     } catch (error) {
       throw error.response?.data || { error: 'Failed to search users' }
@@ -63,7 +63,7 @@ export const socialService = {
       const formData = new FormData()
       formData.append('receiver_id', receiverId)
       formData.append('content', content)
-      const response = await api.post('/auth/messages/send/', formData)
+      const response = await apiClient.post('/auth/messages/send/', formData)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to send message' }
@@ -76,7 +76,7 @@ export const socialService = {
       formData.append('receiver_id', receiverId)
       formData.append('content', content)
       formData.append('image', imageFile)
-      const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+      // API_BASE_URL is imported from axiosConfig
       const token = localStorage.getItem('accessToken')
       const response = await rawAxios.post(`${API_BASE_URL}/auth/messages/send/`, formData, {
         headers: {
@@ -91,7 +91,7 @@ export const socialService = {
 
   getConversation: async (userId) => {
     try {
-      const response = await api.get(`/auth/messages/conversation/${userId}/`)
+      const response = await apiClient.get(`/auth/messages/conversation/${userId}/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch conversation' }
@@ -100,7 +100,7 @@ export const socialService = {
 
   deleteMessage: async (messageId) => {
     try {
-      const response = await api.delete(`/auth/messages/${messageId}/delete/`)
+      const response = await apiClient.delete(`/auth/messages/${messageId}/delete/`)
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to delete message' }
@@ -109,7 +109,7 @@ export const socialService = {
 
   getInbox: async () => {
     try {
-      const response = await api.get('/auth/messages/inbox/')
+      const response = await apiClient.get('/auth/messages/inbox/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch inbox' }
@@ -118,7 +118,7 @@ export const socialService = {
 
   getUnreadCount: async () => {
     try {
-      const response = await api.get('/auth/messages/unread-count/')
+      const response = await apiClient.get('/auth/messages/unread-count/')
       return response.data
     } catch (error) {
       throw error.response?.data || { error: 'Failed to fetch unread count' }
