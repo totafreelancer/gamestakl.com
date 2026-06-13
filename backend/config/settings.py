@@ -7,8 +7,11 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Initialize Firebase
-from firebase_app import initialize_firebase  # noqa: F401
-initialize_firebase()
+try:
+    from firebase_app import initialize_firebase  # noqa: F401
+    initialize_firebase()
+except Exception as e:
+    print(f"WARNING: Firebase initialization failed: {e}")
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 if not SECRET_KEY:

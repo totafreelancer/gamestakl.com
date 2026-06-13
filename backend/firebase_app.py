@@ -15,9 +15,12 @@ def initialize_firebase():
     """Initialize Firebase Admin SDK."""
     if not firebase_admin._apps:
         cred_path = os.path.join(os.path.dirname(__file__), 'firebase-service-account.json')
-        cred = credentials.Certificate(cred_path)
-        firebase_admin.initialize_app(cred)
-        print("Firebase initialized successfully.")
+        if os.path.exists(cred_path):
+            cred = credentials.Certificate(cred_path)
+            firebase_admin.initialize_app(cred)
+            print("Firebase initialized successfully.")
+        else:
+            print("WARNING: firebase-service-account.json not found. Firebase features will be disabled.")
     else:
         print("Firebase already initialized.")
 
