@@ -6,12 +6,14 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env file (for local development)
-try:
-    from dotenv import load_dotenv
-    load_dotenv(BASE_DIR / '.env')
-except ImportError:
-    pass
+# Load environment variables from .env file (for local development only)
+# In production (Render), env vars are set directly via dashboard/render.yaml
+if os.environ.get('RENDER') is None:
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(BASE_DIR / '.env')
+    except ImportError:
+        pass
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 if not SECRET_KEY:
