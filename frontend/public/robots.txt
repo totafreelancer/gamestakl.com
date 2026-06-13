@@ -1,0 +1,17 @@
+# HubZone — Esports & Gaming Community Platform
+# https://hubzone.gg
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://hubzone.gg/sitemap.xml
+
+# Crawl-delay for better server performance
+Crawl-delay: 1
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /profile/settings/
+Disallow: /messages/

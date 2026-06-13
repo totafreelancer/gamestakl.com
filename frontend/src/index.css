@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Dark Mode (Default) */
+  .dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+  }
+
+  /* Light Mode */
+  .light {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border-color: #e2e8f0;
+  }
+
+  body {
+    @apply font-sans antialiased transition-colors duration-300;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .light body {
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+  
+  * {
+    @apply border-dark-700;
+  }
+
+  .light * {
+    @apply border-gray-200;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: var(--bg-primary);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyber-600 rounded;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyber-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-6 py-2.5 bg-gradient-to-r from-cyber-600 to-cyber-500 text-white font-semibold rounded-lg 
+           hover:from-cyber-500 hover:to-cyber-400 transition-all duration-300 shadow-neon
+           focus:outline-none focus:ring-2 focus:ring-cyber-400 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-2.5 bg-dark-800 text-cyber-400 font-semibold rounded-lg border border-cyber-500/30
+           hover:bg-dark-700 hover:border-cyber-500 transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-cyber-400 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .btn-danger {
+    @apply px-6 py-2.5 bg-gradient-to-r from-red-600 to-pink-600 text-white font-semibold rounded-lg
+           hover:from-red-500 hover:to-pink-500 transition-all duration-300 shadow-neon-pink
+           focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 focus:ring-offset-dark-900;
+  }
+  
+  .card {
+    @apply bg-dark-800/80 backdrop-blur-sm border border-dark-700 rounded-xl shadow-lg
+           hover:border-cyber-500/50 transition-all duration-300;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-neon hover:-translate-y-1;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2.5 bg-dark-800 border border-dark-700 rounded-lg text-dark-100
+           focus:outline-none focus:border-cyber-500 focus:ring-1 focus:ring-cyber-500
+           placeholder:text-dark-500 transition-all duration-200;
+  }
+  
+  .neon-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-cyber-400 to-neon-pink;
+  }
+  
+  .neon-border {
+    @apply border-2 border-transparent bg-gradient-to-r from-cyber-500 via-neon-pink to-neon-purple;
+  }
+  
+  .glass {
+    @apply bg-dark-800/40 backdrop-blur-md border border-dark-700/50;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-vip {
+    @apply badge bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-neon;
+  }
+  
+  .badge-success {
+    @apply badge bg-green-500/20 text-green-400 border border-green-500/30;
+  }
+  
+  .badge-warning {
+    @apply badge bg-yellow-500/20 text-yellow-400 border border-yellow-500/30;
+  }
+  
+  .badge-danger {
+    @apply badge bg-red-500/20 text-red-400 border border-red-500/30;
+  }
+  
+  .badge-info {
+    @apply badge bg-cyber-500/20 text-cyber-400 border border-cyber-500/30;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
+  .grid-bg {
+    background-image: 
+      linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
