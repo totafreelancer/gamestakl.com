@@ -31,7 +31,7 @@ class NotificationService {
     const token = localStorage.getItem('accessToken')
     if (!token) return
 
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000'
+    const wsUrl = import.meta.env.VITE_WS_URL || 'wss://gaming-platform-api-5wie.onrender.com'
 
     try {
       this.ws = new WebSocket(`${wsUrl}/ws/notifications/?token=${token}`)
@@ -70,7 +70,7 @@ class NotificationService {
   connectOnlineStatus() {
     if (this.onlineStatusWs && this.onlineStatusWs.readyState === WebSocket.OPEN) return
 
-    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000'
+    const wsUrl = import.meta.env.VITE_WS_URL || 'wss://gaming-platform-api-5wie.onrender.com'
 
     try {
       this.onlineStatusWs = new WebSocket(`${wsUrl}/ws/online-status/`)

@@ -83,7 +83,9 @@ def verify_id_token(id_token):
         print(f"Failed to load public key: {e}")
         return None
 
-    project_id = firebase_admin.get_app().project_id
+    # Use project_id from Firebase config (can't use firebase_admin.get_app() 
+    # because Admin SDK may not be initialized without service account file)
+    project_id = "hubzone-gaming"
 
     # Decode token with ALL verification disabled - we'll do manual checks
     try:

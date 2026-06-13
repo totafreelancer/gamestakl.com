@@ -3,7 +3,7 @@ import axios from 'axios'
 // Re-export raw axios for file uploads (without default Content-Type header)
 const rawAxios = axios
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://gaming-platform-api-5wie.onrender.com/api'
 
 const api = axios.create({
   baseURL: API_BASE_URL,

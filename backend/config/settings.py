@@ -144,6 +144,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
 ]
 
+# Add FRONTEND_URL from environment variable (set on Render)
+_frontend_url = os.environ.get('FRONTEND_URL', '')
+if _frontend_url and _frontend_url not in CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS.append(_frontend_url.strip())
+
 # Additional origins from environment variable (comma-separated)
 _cors_origins_env = os.environ.get('CORS_ALLOWED_ORIGINS', '')
 if _cors_origins_env:
