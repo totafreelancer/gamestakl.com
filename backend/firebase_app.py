@@ -240,5 +240,8 @@ def delete_firebase_user(uid):
         print(f"Failed to delete Firebase user {uid}: {e}")
         return False
 
-# Initialize on import
-initialize_firebase()
+# Initialize on import (only if service account file exists)
+if os.path.exists(os.path.join(os.path.dirname(__file__), 'firebase-service-account.json')):
+    initialize_firebase()
+else:
+    print("WARNING: firebase-service-account.json not found. Skipping Firebase initialization.")
