@@ -14,13 +14,27 @@ _PUBLIC_KEYS_CACHE_TTL = 3600  # 1 hour
 def initialize_firebase():
     """Initialize Firebase Admin SDK."""
     if not firebase_admin._apps:
+        # Option 1: Load from environment variable (recommended for production)
+        firebase_creds_json = os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON')
+        if firebase_creds_json:
+            import json
+            try:
+                cred_dict = json.loads(firebase_creds_json)
+                cred = credentials.Certificate(cred_dict)
+                firebase_admin.initialize_app(cred)
+                print("Firebase initialized successfully from environment variable.")
+                return
+            except Exception as e:
+                print(f"WARNING: Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON: {e}")
+
+        # Option 2: Load from file (for local development)
         cred_path = os.path.join(os.path.dirname(__file__), 'firebase-service-account.json')
         if os.path.exists(cred_path):
             cred = credentials.Certificate(cred_path)
             firebase_admin.initialize_app(cred)
-            print("Firebase initialized successfully.")
+            print("Firebase initialized successfully from file.")
         else:
-            print("WARNING: firebase-service-account.json not found. Firebase features will be disabled.")
+            print("WARNING: Firebase credentials not found. Firebase features will be disabled.")
     else:
         print("Firebase already initialized.")
 
@@ -242,8 +256,5 @@ def delete_firebase_user(uid):
         print(f"Failed to delete Firebase user {uid}: {e}")
         return False
 
-# Initialize on import (only if service account file exists)
-if os.path.exists(os.path.join(os.path.dirname(__file__), 'firebase-service-account.json')):
-    initialize_firebase()
-else:
-    print("WARNING: firebase-service-account.json not found. Skipping Firebase initialization.")
+# Initialize on import (gracefully handles missing credentials)
+initialize_firebase()
